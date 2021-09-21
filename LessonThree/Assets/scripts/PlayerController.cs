@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
+    public AudioClip crashSound;
+    public AudioClip jumpSound;
     public float jumpForce = 10;
     public float gravityModifier;
     public bool isOnGround = true;
@@ -40,7 +42,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-            dirtParticle.Play();
+            if (!gameOver) 
+            {
+                dirtParticle.Play();
+            }
+            
         }else if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Game Over");
