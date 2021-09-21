@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dirtParticle;
     public AudioClip crashSound;
     public AudioClip jumpSound;
+    private AudioSource playerAudio;
     public float jumpForce = 10;
     public float gravityModifier;
     public bool isOnGround = true;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
         Physics.gravity *= gravityModifier;
     }
 
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
             isOnGround = false;
             playerAnim.SetTrigger("Jump_trig");
             dirtParticle.Stop();
+            playerAudio.PlayOneShot(jumpSound, 1.0f);
         }
     }
 
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 1);
             gameOver = true;
+            playerAudio.PlayOneShot(crashSound, 1.0f);
             explosionParticle.Play();
             dirtParticle.Stop();
         }
